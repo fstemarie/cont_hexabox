@@ -1,0 +1,15 @@
+version: "2"
+services:
+  jellyfin:
+    image: ghcr.io/jellyfin/jellyfin
+    container_name: jellyfin
+    user: 999:999
+    ports:
+      - 8096:8096
+      - 1900:1900
+      - 7359:7359
+    volumes:
+      - /var/containers/jellyfin/config:/config
+      - /var/containers/jellyfin/cache:/cache
+      - /var/containers/jellyfin/media:/media
+    restart: "unless-stopped"
