@@ -1,40 +1,40 @@
 version: '3.1'
 services:
-	mariadb:
-		image: ghcr.io/linuxserver/mariadb
-		container_name: mariadb
-		hostname: mariadb
-		env_file:
-		  - .mdb.env
-		environment:
-		  - PUID=998
-		  - PGID=999
-		  - TZ=America/Toronto
+  mariadb:
+    image: ghcr.io/linuxserver/mariadb
+    container_name: mariadb
+    hostname: mariadb
+    env_file:
+      - .mdb.env
+    environment:
+      - PUID=998
+      - PGID=999
+      - TZ=America/Toronto
       # - MYSQL_ROOT_PASSWORD=
-		  # - MYSQL_DATABASE=USER_DB_NAME #optional
-		  # - MYSQL_USER=MYSQL_USER #optional
-		  # - MYSQL_PASSWORD=DATABASE_PASSWORD #optional
-		  # - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
-		volumes:
-		  - /var/containers/mariadb/config:/config
-		ports:
-		  - 3306:3306
-		restart: unless-stopped
+      # - MYSQL_DATABASE=USER_DB_NAME #optional
+      # - MYSQL_USER=MYSQL_USER #optional
+      # - MYSQL_PASSWORD=DATABASE_PASSWORD #optional
+      # - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
+    volumes:
+      - /var/containers/mariadb/config:/config
+    ports:
+      - 3306:3306
+    restart: unless-stopped
 
-	phpmyadmin:
-		image: phpmyadmin
-		container_name: phpmyadmin
-		hostname: phpmyadmin
-		restart: unless-stopped
-		volumes:
-			- /var/containers/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
-		  ports:
-			- 8080:80
-		env_file: 
-			- .pma.env
-		environment:
-			- PMA_ARBITRARY=1
-			- PMA_HOST=mariadb
-			- PMA_PORT=3306
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    hostname: phpmyadmin
+    restart: unless-stopped
+    volumes:
+      - /var/containers/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+    ports:
+      - 8080:80
+    env_file: 
+      - .pma.env
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mariadb
+      - PMA_PORT=3306
       # - PMA_PMA_USER=
       # - PMA_PASSWORD=
