@@ -16,7 +16,9 @@ services:
       # - MYSQL_PASSWORD=DATABASE_PASSWORD #optional
       # - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
     volumes:
-      - /var/containers/mariadb/config:/config
+      - /var/containers/mariadb:/config
+      - /var/run/mysqld/:/var/run/mysqld/
+
     ports:
       - 3306:3306
     restart: unless-stopped
@@ -26,15 +28,15 @@ services:
     container_name: phpmyadmin
     hostname: phpmyadmin
     restart: unless-stopped
-    volumes:
-      - /var/containers/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
     ports:
       - 8080:80
     env_file: 
       - .pma.env
     environment:
-      - PMA_ARBITRARY=1
+      # - PMA_ARBITRARY=1
       - PMA_HOST=mariadb
       - PMA_PORT=3306
-      # - PMA_PMA_USER=
+      # - PMA_USER=
       # - PMA_PASSWORD=
+    volumes:
+      - /var/containers/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
