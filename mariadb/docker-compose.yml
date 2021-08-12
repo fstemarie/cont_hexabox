@@ -5,7 +5,7 @@ services:
     container_name: mariadb
     hostname: mariadb
     env_file:
-      - .mdb.env
+      - mdb.env
     environment:
       - PUID=998
       - PGID=999
@@ -24,19 +24,20 @@ services:
     restart: unless-stopped
 
   phpmyadmin:
-    image: phpmyadmin
+    image: ghcr.io/linuxserver/phpmyadmin
     container_name: phpmyadmin
     hostname: phpmyadmin
     restart: unless-stopped
     ports:
       - 8080:80
-    env_file: 
-      - .pma.env
+    env_file:
+      - pma.env
     environment:
-      # - PMA_ARBITRARY=1
+      - TZ=America/Toronto
       - PMA_HOST=mariadb
       - PMA_PORT=3306
+      # - PMA_ARBITRARY=1
       # - PMA_USER=
       # - PMA_PASSWORD=
     volumes:
-      - /var/containers/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+      - /var/containers/phpmyadmin/config:/config
