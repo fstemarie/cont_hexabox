@@ -1,0 +1,18 @@
+
+version: "2.1"
+services:
+  homeassistant:
+    image: lscr.io/linuxserver/homeassistant
+    container_name: homeassistant
+    network_mode: host
+    environment:
+      - PUID=999
+      - PGID=999
+      - TZ=America/Toronto
+    volumes:
+      - /var/containers/homeassistant/config:/config
+    ports:
+      - 8123:8123 #optional
+    # devices:
+    #   - /path/to/device:/path/to/device
+    restart: unless-stopped
