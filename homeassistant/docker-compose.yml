@@ -4,7 +4,7 @@ services:
   homeassistant:
     image: lscr.io/linuxserver/homeassistant
     container_name: homeassistant
-    network_mode: host
+    hostname: homeassistant
     environment:
       - PUID=999
       - PGID=999
@@ -16,3 +16,28 @@ services:
     # devices:
     #   - /path/to/device:/path/to/device
     restart: unless-stopped
+
+  nodered:
+    image: docker.io/nodered/node-red
+    container_name: nodered
+    hostname: nodered
+    ports:
+      - 1880:1880
+    volumes:
+      - /var/containers/nodered/data:/data
+    restart: unless-stopped
+
+  mosquitto:
+    image: docker.io/eclipse-mosquitto
+    container_name: mosquitto
+    hostname: mosquitto
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - /var/containers/mosquitto/config:/mosquitto/config
+      - mosquitto_data:/mosquitto/data
+      - /var/containers/mosquitto/log:/mosquitto/log
+
+volumes:
+  mosquitto_data:
